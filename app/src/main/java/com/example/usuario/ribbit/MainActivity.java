@@ -42,6 +42,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         Intent intent = new Intent(this, LoginActivity.class);
 
+        //When the user clicks "back", he wont come back to the main layout
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         startActivity(intent);
 
         // Set up the action bar.
