@@ -1,8 +1,7 @@
 package com.example.usuario.ribbit;
 
-import android.app.AlertDialog;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -58,15 +57,13 @@ public class SignUpActivity extends ActionBarActivity {
         email = email.trim();
 
         if (username.isEmpty() || password.isEmpty() || email.isEmpty()){
-            AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-            builder.setMessage(R.string.sign_up_error_message)
-                .setTitle(R.string.sign_up_error_title)
-                .setPositiveButton(android.R.string.ok, null);
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            AlertDialogGenerator dialog = new AlertDialogGenerator();
+            dialog.showAlertDialog(SignUpActivity.this, R.string.sign_up_error_message, R.string.sign_up_error_title);
         }
         else{
             //Create the user
+
+
         }
     }
 }
