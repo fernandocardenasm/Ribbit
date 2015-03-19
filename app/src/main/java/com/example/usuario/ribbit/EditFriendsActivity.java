@@ -7,13 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class EditFriendsActivity extends ListActivity {
     public static final String TAG = EditFriendsActivity.class.getSimpleName();
 
     private List<ParseUser> mUsers;
+    private ParseRelation<ParseUser> mFriendsRelation;
+    private ParseUser mCurrentUser;
 
     @InjectView(R.id.editFriendsProgressBar) ProgressBar mEditFriendsProgressBar;
     @InjectView(android.R.id.empty) TextView mEmptyTextView;
@@ -36,11 +41,21 @@ public class EditFriendsActivity extends ListActivity {
         setContentView(R.layout.activity_edit_friends);
         ButterKnife.inject(this);
         mEditFriendsProgressBar.setVisibility(View.INVISIBLE);
+
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        loadFriendsList();
+    }
+
+    private void loadFriendsList() {
+
+        mCurrentUser = ParseUser.getCurrentUser();
+        mFriendsRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDS_RELATION);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -101,5 +116,28 @@ public class EditFriendsActivity extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        if (getListView().isItemChecked(position)){
+            //Add friend
+            mFriendsRelation.add(mUsers.get(position));
+            mCurrentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null){
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            });
+        }
+        else{
+            //Remove friend
+        }
+
+
     }
 }
