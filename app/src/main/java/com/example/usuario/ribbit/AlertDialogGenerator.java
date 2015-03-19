@@ -15,4 +15,22 @@ public class AlertDialogGenerator {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    public void showAlertDialog(Context context, String message, int title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setTitle(title)
+                .setPositiveButton(android.R.string.ok, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showAlertDialog(Context context, String message, String title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message)
+                .setTitle(title)
+                .setPositiveButton(android.R.string.ok, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
