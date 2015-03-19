@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -21,12 +23,14 @@ public class SignUpActivity extends ActionBarActivity {
     @InjectView(R.id.usernameField) EditText mUsernameField;
     @InjectView(R.id.passwordField) EditText mPasswordField;
     @InjectView(R.id.emailField) EditText mEmailField;
+    @InjectView(R.id.signUpProgressBar) ProgressBar mSignUpProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
+        mSignUpProgressBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -74,6 +78,7 @@ public class SignUpActivity extends ActionBarActivity {
 
     private void signUpUser(String username, String password, String email) {
         //Create the user
+        mSignUpProgressBar.setVisibility(View.VISIBLE);
         ParseUser newUser = new ParseUser();
         newUser.setUsername(username);
         newUser.setPassword(password);
@@ -81,6 +86,7 @@ public class SignUpActivity extends ActionBarActivity {
         newUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
+                mSignUpProgressBar.setVisibility(View.INVISIBLE);
                 if (e == null){
                     //Success
                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);

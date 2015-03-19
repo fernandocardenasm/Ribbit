@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -20,6 +22,7 @@ public class LoginActivity extends ActionBarActivity {
 
     @InjectView(R.id.usernameField) EditText mUsernameField;
     @InjectView(R.id.passwordField) EditText mPasswordField;
+    @InjectView(R.id.loginProgressBar) ProgressBar mLoginProgressBar;
 
 
     @Override
@@ -27,6 +30,7 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+        mLoginProgressBar.setVisibility(View.INVISIBLE);
     }
 
 
@@ -79,9 +83,13 @@ public class LoginActivity extends ActionBarActivity {
     private void loginUser(String username, String password) {
         //Log in
 
+        mLoginProgressBar.setVisibility(View.VISIBLE);
+
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
+                mLoginProgressBar.setVisibility(View.INVISIBLE);
+
                 if (e == null){
                     //Success
 
