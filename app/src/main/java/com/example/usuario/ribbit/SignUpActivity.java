@@ -67,7 +67,7 @@ public class SignUpActivity extends ActionBarActivity {
 
         if (username.isEmpty() || password.isEmpty() || email.isEmpty()){
             AlertDialogGenerator dialog = new AlertDialogGenerator();
-            dialog.showAlertDialog(SignUpActivity.this, R.string.sign_up_error_message, R.string.sign_up_error_title);
+            dialog.showAlertDialog(SignUpActivity.this, getString(R.string.sign_up_error_message), getString(R.string.sign_up_error_title));
         }
         else{
 
@@ -96,7 +96,7 @@ public class SignUpActivity extends ActionBarActivity {
                 }
                 else{
                     AlertDialogGenerator dialog = new AlertDialogGenerator();
-                    dialog.showAlertDialog(SignUpActivity.this, e.getMessage(), R.string.sign_up_error_title);
+                    dialog.showAlertDialog(SignUpActivity.this, e.getMessage(), getString(R.string.sign_up_error_title));
 
                 }
             }

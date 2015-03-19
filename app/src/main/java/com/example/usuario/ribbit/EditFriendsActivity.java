@@ -1,15 +1,22 @@
 package com.example.usuario.ribbit;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 
 public class EditFriendsActivity extends ActionBarActivity {
+
+    public static final String TAG = EditFriendsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,19 @@ public class EditFriendsActivity extends ActionBarActivity {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.orderByAscending(ParseConstants.KEY_USERNAME);
         query.setLimit(1000);
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> parseUsers, ParseException e) {
+                if (e == null){
+
+                }
+                else{
+                    Log.e(TAG, e.getMessage());
+                    AlertDialogGenerator dialog = new AlertDialogGenerator();
+                    dialog.showAlertDialog(EditFriendsActivity.this, e.getMessage(), getString(R.string.error_title));
+                }
+            }
+        });
     }
 
     @Override

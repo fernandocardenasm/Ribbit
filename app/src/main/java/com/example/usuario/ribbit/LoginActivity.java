@@ -66,7 +66,7 @@ public class LoginActivity extends ActionBarActivity {
 
         if (username.isEmpty() || password.isEmpty()){
             AlertDialogGenerator dialog = new AlertDialogGenerator();
-            dialog.showAlertDialog(LoginActivity.this, R.string.login_error_message, R.string.login_error_title);
+            dialog.showAlertDialog(LoginActivity.this, getString(R.string.login_error_message), getString(R.string.login_error_title));
         }
         else{
 
@@ -100,7 +100,7 @@ public class LoginActivity extends ActionBarActivity {
                 }
                 else{
                     AlertDialogGenerator dialog = new AlertDialogGenerator();
-                    dialog.showAlertDialog(LoginActivity.this, e.getMessage(), R.string.login_error_title);
+                    dialog.showAlertDialog(LoginActivity.this, e.getMessage(), getString(R.string.login_error_title));
                 }
             }
         });
