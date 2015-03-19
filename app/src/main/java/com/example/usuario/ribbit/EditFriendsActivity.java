@@ -52,6 +52,8 @@ public class EditFriendsActivity extends ListActivity {
         loadFriendsList();
     }
 
+
+    //Bring the list with all the friends of the system
     private void loadFriendsList() {
 
         mCurrentUser = ParseUser.getCurrentUser();
@@ -86,6 +88,8 @@ public class EditFriendsActivity extends ListActivity {
                             android.R.layout.simple_list_item_checked,
                             usernames);
                     setListAdapter(adapter);
+
+                    addFriendCheckmarks();
                 }
                 else{
                     Log.e(TAG, e.getMessage());
@@ -95,6 +99,7 @@ public class EditFriendsActivity extends ListActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,6 +143,31 @@ public class EditFriendsActivity extends ListActivity {
             //Remove friend
         }
 
+    }
 
+    //To retrieve the friends that were already checked
+    private void addFriendCheckmarks() {
+        mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> friends, ParseException e) {
+                if (e == null){
+                    //List returned - look for a match
+                    for (int i = 0; i < mUsers.size(); i++){
+                        ParseUser user = mUsers.get(i);
+
+                        for (ParseUser friend: friends){
+                            if (friend.getObjectId().equals(user.getObjectId())){
+                                getListView().setItemChecked(i, true);
+                            }
+                        }
+
+                    }
+                }
+                else{
+                    Log.e(TAG, e.getMessage());
+                }
+
+            }
+        });
     }
 }
