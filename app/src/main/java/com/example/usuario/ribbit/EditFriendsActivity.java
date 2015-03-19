@@ -1,10 +1,14 @@
 package com.example.usuario.ribbit;
 
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -13,15 +17,25 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-public class EditFriendsActivity extends ActionBarActivity {
+
+public class EditFriendsActivity extends ListActivity {
 
     public static final String TAG = EditFriendsActivity.class.getSimpleName();
+
+    private List<ParseUser> mUsers;
+
+    @InjectView(R.id.editFriendsProgressBar) ProgressBar mEditFriendsProgressBar;
+    @InjectView(android.R.id.empty) TextView mEmptyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_friends);
+        ButterKnife.inject(this);
+        mEditFriendsProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -31,11 +45,32 @@ public class EditFriendsActivity extends ActionBarActivity {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.orderByAscending(ParseConstants.KEY_USERNAME);
         query.setLimit(1000);
+
+        mEmptyTextView.setText(getString(R.string.loading_friends_label));
+
+
+        mEditFriendsProgressBar.setVisibility(View.VISIBLE);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> parseUsers, ParseException e) {
+                mEditFriendsProgressBar.setVisibility(View.INVISIBLE);
+                mEmptyTextView.setText(getString(R.string.empty_friends_label));
                 if (e == null){
+                    mUsers = parseUsers;
+                    String[] usernames = new String[mUsers.size()];
 
+                    int i = 0;
+
+                    for (ParseUser user: mUsers){
+                        usernames[i] = user.getUsername();
+                        i++;
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                            EditFriendsActivity.this,
+                            android.R.layout.simple_list_item_checked,
+                            usernames);
+                    setListAdapter(adapter);
                 }
                 else{
                     Log.e(TAG, e.getMessage());
