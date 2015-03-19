@@ -71,6 +71,11 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
+    @OnClick(R.id.signUpText) void goToSignUpActivity(){
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
     private void loginUser(String username, String password) {
         //Log in
 
