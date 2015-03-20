@@ -63,7 +63,7 @@ public class EditFriendsActivity extends ListActivity {
         query.orderByAscending(ParseConstants.KEY_USERNAME);
         query.setLimit(1000);
 
-        mEmptyTextView.setText(getString(R.string.loading_friends_label));
+        mEmptyTextView.setText(getString(R.string.loading_list_friends_label));
 
 
         mEditFriendsProgressBar.setVisibility(View.VISIBLE);
@@ -160,13 +160,11 @@ public class EditFriendsActivity extends ListActivity {
                                 getListView().setItemChecked(i, true);
                             }
                         }
-
                     }
                 }
                 else{
                     Log.e(TAG, e.getMessage());
                 }
-
             }
         });
     }
