@@ -29,6 +29,8 @@
     <string name="loading_current_friends_label">Loading list of current friends...</string>
     <string name="loading_list_friends_label">Loading list of friends...</string>
     <string name="menu_camera_label">Camera</string>
+    <string name="error_accessing_external_storage">There was a problem accessing your device\'s external storage</string>
+    <string name="error_failed_to_create_directory">Failed to create directory</string>
 
     <string-array name="camera_choices">
         <item>Take Picture</item>

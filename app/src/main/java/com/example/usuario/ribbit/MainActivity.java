@@ -3,7 +3,9 @@ package com.example.usuario.ribbit;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -13,8 +15,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -24,6 +32,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public static final int TAKE_VIDEO_REQUEST = 1;
     public static final int PICK_PHOTO_REQUEST = 2;
     public static final int PICK_VIDEO_REQUEST = 3;
+
+    public static final int MEDIA_TYPE_IMAGE = 4;
+    public static final int MEDIA_TYPE_VIDEO= 5;
+
+    private Uri mMediaUri;
 
 
 
@@ -35,7 +48,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch (which){
                 case 0: //Take picture Option
                     Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST );
+
+                    //Save Image
+                    mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+
+                    if (mMediaUri == null){
+                        //Display an error
+                        Toast.makeText(MainActivity.this, getString(R.string.error_accessing_external_storage), Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+
+                        //Get the result of the Intent
+                        startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
+                    }
+
+
                     break;
                 case 1: //Take video
                     break;
@@ -45,7 +73,72 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     break;
             }
         }
+
+        private Uri getOutputMediaFileUri(int mediaType) {
+            //To be safe, you should check that the SDCard is mounted
+            //using Environment.getExternalStorageState() before doing this
+
+            if (isExternalStorageAvailable()){
+                //get the URI
+
+                //1. Get the external  storage directory
+
+                String appName = MainActivity.this.getString(R.string.app_name);
+
+                File mediaStorageDir = new File(
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                        appName);
+                //2. Create our subdirectory
+
+                if (! mediaStorageDir.exists()){
+                    if (! mediaStorageDir.mkdirs()){
+                        Log.e(TAG, getString(R.string.error_failed_to_create_directory));
+                        return null;
+                    }
+                }
+                //3. Create a filename
+                //4. Create the file
+
+                File mediaFile;
+                Date now = new Date();
+                String timestap = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
+
+                String path = mediaStorageDir.getPath() + File.separator;
+
+                if (mediaType == MEDIA_TYPE_IMAGE){
+                    mediaFile = new File(path + "IMG" + timestap + ".jpg");
+                }
+                else if (mediaType == MEDIA_TYPE_VIDEO){
+                    mediaFile = new File(path + "VID" + timestap + ".mp4");
+                }
+                else{
+                    return null;
+                }
+
+                Log.d(TAG, "File: " + Uri.fromFile(mediaFile));
+                //5. Create the file's Uri
+                return Uri.fromFile(mediaFile);
+            }
+            else{
+                return null;
+            }
+
+
+        }
+
+        private boolean isExternalStorageAvailable(){
+            String state = Environment.getExternalStorageState();
+
+            if ( state.equals(Environment.MEDIA_MOUNTED)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     };
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
