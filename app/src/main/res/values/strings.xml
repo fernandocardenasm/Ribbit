@@ -28,5 +28,6 @@
     <string name="error_title">We are sorry!</string>
     <string name="loading_current_friends_label">Loading list of current friends...</string>
     <string name="loading_list_friends_label">Loading list of friends...</string>
+    <string name="menu_camera_label">Camera</string>
 
 </resources>
