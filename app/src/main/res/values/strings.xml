@@ -30,4 +30,12 @@
     <string name="loading_list_friends_label">Loading list of friends...</string>
     <string name="menu_camera_label">Camera</string>
 
+    <string-array name="camera_choices">
+        <item>Take Picture</item>
+        <item>Take Video</item>
+        <item>Choose Picture</item>
+        <item>Take Video</item>
+    </string-array>
+
+
 </resources>
