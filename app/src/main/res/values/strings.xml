@@ -42,6 +42,8 @@
         <item>Choose Picture</item>
         <item>Take Video</item>
     </string-array>
+    <string name="title_activity_recipients">Choose Recipients</string>
+    <string name="empty_reciepts_list_message">Choose some friends first!</string>
 
 
 </resources>

@@ -353,6 +353,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 sendBroadcast(mediaScanIntent);
             }
 
+            Intent recieptsIntent = new Intent(this, RecipientsActivity.class);
+            recieptsIntent.setData(mMediaUri);
+            startActivity(recieptsIntent);
+
 
         }
         else if (resultCode != RESULT_CANCELED){
