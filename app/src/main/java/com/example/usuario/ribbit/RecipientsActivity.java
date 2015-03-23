@@ -1,6 +1,7 @@
 package com.example.usuario.ribbit;
 
 import android.app.ListActivity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +13,12 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -29,6 +32,9 @@ public class RecipientsActivity extends ListActivity {
     private List<ParseUser> mFriends;
     private ParseRelation<ParseUser> mFriendsRelation;
     private ParseUser mCurrentUser;
+    private MenuItem mSendMenuItem;
+    private Uri mMediaUri;
+    private String mFileType;
 
     @InjectView(R.id.friendsRetrieveProgressBar) ProgressBar mFriendsRetrieveProgressBar;
     @InjectView(android.R.id.empty) TextView mEmptyTextView;
@@ -39,9 +45,14 @@ public class RecipientsActivity extends ListActivity {
         setContentView(R.layout.activity_recipients);
         ButterKnife.inject(this);
 
+
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        //mFriendsRetrieveProgressBar.setVisibility(View.VISIBLE);
+        mMediaUri = getIntent().getData();
+        mFileType = getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
+        //Get the Uri from the Intent
+
+
     }
 
     @Override
@@ -56,6 +67,7 @@ public class RecipientsActivity extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_recipients, menu);
+        mSendMenuItem = menu.getItem(0);
         return true;
     }
 
@@ -67,8 +79,12 @@ public class RecipientsActivity extends ListActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_send:
+                ParseObject message = createMessage();
+                //send(message);
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -121,5 +137,43 @@ public class RecipientsActivity extends ListActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        if (l.getCheckedItemCount() > 0){
+            mSendMenuItem.setVisible(true);
+        }
+        else{
+            mSendMenuItem.setVisible(false);
+        }
+
+    }
+
+    //Add the fields and data to the message
+
+    protected ParseObject createMessage(){
+        ParseObject message = new ParseObject(ParseConstants.CLASS_MESSAGES);
+        message.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
+        message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
+        message.put(ParseConstants.KEY_RECIPIENT_IDS, getRecipientIds());
+        message.put(ParseConstants.KEY_FILE_TYPE, mFileType);
+
+        byte[] fileBytes;
+
+        return message;
+    }
+
+    //Get the Friend´s Ids that were selected
+    protected ArrayList<String> getRecipientIds(){
+        ArrayList<String> recipientIds = new ArrayList<String>();
+        for (int i = 0; i < getListView().getCount(); i++){
+            if (getListView().isItemChecked(i)){
+                recipientIds.add(mFriends.get(i).getObjectId());
+            }
+        }
+
+        return recipientIds;
     }
 }
