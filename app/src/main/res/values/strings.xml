@@ -31,7 +31,7 @@
     <string name="menu_camera_label">Camera</string>
     <string name="error_accessing_external_storage">There was a problem accessing your device\'s external storage</string>
     <string name="error_failed_to_create_directory">Failed to create directory</string>
-    <string name="general_error">The action was not finish succesfully.</string>
+    <string name="general_error">The action was not finish successfully.</string>
     <string name="warning_video_size_limit">The selected video must be less than 10 MB</string>
     <string name="error_opening_file">There was a problem with the selected file.</string>
     <string name="error_file_size_too_large">The selected File is too large. Please select a new File</string>
@@ -40,11 +40,14 @@
         <item>Take Picture</item>
         <item>Take Video</item>
         <item>Choose Picture</item>
-        <item>Take Video</item>
+        <item>Choose Video</item>
     </string-array>
     <string name="title_activity_recipients">Choose Recipients</string>
     <string name="empty_reciepts_list_message">Choose some friends first!</string>
     <string name="menu_send_label">Send</string>
+    <string name="error_selecting_file">There was an error with file selected. Please select a new one</string>
+    <string name="success_message">Message sent!</string>
+    <string name="error_sending_message">There was an error sending your message. Please try again.</string>
 
 
 </resources>
