@@ -44,7 +44,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private Uri mMediaUri;
 
 
-
     //Set which action will be triggered depending on which option is clicked
     private DialogInterface.OnClickListener mDialogListener =
             new DialogInterface.OnClickListener() {
@@ -237,6 +236,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
     }
+
 
     private void navigateToLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
