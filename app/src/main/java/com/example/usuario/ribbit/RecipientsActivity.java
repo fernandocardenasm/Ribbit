@@ -11,8 +11,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.usuario.ribbit.file_handlers.FileHelper;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -160,9 +162,23 @@ public class RecipientsActivity extends ListActivity {
         message.put(ParseConstants.KEY_RECIPIENT_IDS, getRecipientIds());
         message.put(ParseConstants.KEY_FILE_TYPE, mFileType);
 
-        byte[] fileBytes;
+        byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
 
-        return message;
+        if (fileBytes == null){
+            return null;
+        }
+        else{
+            if (mFileType.equals(ParseConstants.TYPE_IMAGE)){
+                fileBytes = FileHelper.reduceImageForUpload(fileBytes);
+            }
+
+            String fileName = FileHelper.getFileName(this, mMediaUri, mFileType);
+            ParseFile file = new ParseFile(fileName, fileBytes);
+
+            message.put(ParseConstants.KEY_FILE, file);
+            return message;
+        }
+
     }
 
     //Get the Friend´s Ids that were selected

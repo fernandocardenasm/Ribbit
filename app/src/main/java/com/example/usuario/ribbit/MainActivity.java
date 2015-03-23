@@ -356,7 +356,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             Intent recieptsIntent = new Intent(this, RecipientsActivity.class);
             recieptsIntent.setData(mMediaUri);
 
-            String fileType = "";
+            String fileType="";
 
             if (requestCode == PICK_PHOTO_REQUEST || requestCode == TAKE_PHOTO_REQUEST){
                 fileType = ParseConstants.TYPE_IMAGE;
