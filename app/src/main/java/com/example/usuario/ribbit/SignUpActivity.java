@@ -30,6 +30,9 @@ public class SignUpActivity extends ActionBarActivity {
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
         mSignUpProgressBar.setVisibility(View.INVISIBLE);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 
 
