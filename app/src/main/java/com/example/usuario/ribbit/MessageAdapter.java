@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.usuario.ribbit.ParseConstants;
+import com.example.usuario.ribbit.R;
 import com.parse.ParseObject;
 
 import java.util.List;

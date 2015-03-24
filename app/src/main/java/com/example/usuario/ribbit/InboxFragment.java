@@ -12,6 +12,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.usuario.ribbit.MessageAdapter;
+import com.example.usuario.ribbit.ParseConstants;
+import com.example.usuario.ribbit.R;
+import com.example.usuario.ribbit.ViewImageActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
