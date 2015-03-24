@@ -21,4 +21,13 @@
         android:id="@android:id/empty"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inboxProgressBar"
+        android:layout_above="@android:id/empty"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

@@ -96,6 +96,11 @@ public class RecipientsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_send:
+
+                //The item get unable while it sends the message
+                mSendMenuItem.setEnabled(false);
+
+                //Create the message
                 ParseObject message = createMessage();
                 //
 
@@ -197,6 +202,8 @@ public class RecipientsActivity extends ActionBarActivity {
     //Add the fields and data to the message
 
     protected ParseObject createMessage(){
+
+
         ParseObject message = new ParseObject(ParseConstants.CLASS_MESSAGES);
         message.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
         message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
@@ -235,6 +242,8 @@ public class RecipientsActivity extends ActionBarActivity {
     }
 
     protected void send(ParseObject message){
+
+
         message.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -248,7 +257,7 @@ public class RecipientsActivity extends ActionBarActivity {
                             getString(R.string.error_title));
                 }
 
-
+                mSendMenuItem.setEnabled(true);
             }
         });
     }

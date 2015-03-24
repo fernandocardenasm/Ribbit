@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -26,6 +28,9 @@ public class InboxFragment extends ListFragment {
 
     private List<ParseObject> mMessages;
 
+    ProgressBar mInboxProgressBar;
+    TextView mEmptyTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,12 +46,26 @@ public class InboxFragment extends ListFragment {
     }
 
     private void LoadInboxMessages() {
+
+
+        mInboxProgressBar = (ProgressBar) getView().findViewById(R.id.inboxProgressBar);
+        mEmptyTextView = (TextView) getView().findViewById(android.R.id.empty);
+
+        //Loading Progress Bar
+        mInboxProgressBar.setVisibility(View.VISIBLE);
+        mEmptyTextView.setText(getString(R.string.loading_inbox_messages));
+
+
         ParseQuery<ParseObject> query = new ParseQuery<>(ParseConstants.CLASS_MESSAGES);
         query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
         query.addDescendingOrder(ParseConstants.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> messages, ParseException e) {
+
+                mInboxProgressBar.setVisibility(View.INVISIBLE);
+                mEmptyTextView.setText(R.string.empty_inbox_label);
+                
                 if (e == null){
                     //We find messages
                     mMessages = messages;

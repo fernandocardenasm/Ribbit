@@ -49,6 +49,8 @@
     <string name="success_message">Message sent!</string>
     <string name="error_sending_message">There was an error sending your message. Please try again.</string>
     <string name="title_activity_view_image">Ribbit</string>
+    <string name="sending_message">Sending Message...</string>
+    <string name="loading_inbox_messages">Loading messages...</string>
 
 
 </resources>
