@@ -51,6 +51,7 @@
     <string name="title_activity_view_image">Ribbit</string>
     <string name="sending_message">Sending Message...</string>
     <string name="loading_inbox_messages">Loading messages...</string>
+    <string name="content_desc_background">Ribbit Frog Background Image</string>
 
 
 </resources>
