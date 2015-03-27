@@ -85,10 +85,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login_button"
+        android:textSize="13sp"
+        android:textColor="@color/text_color"
         android:id="@+id/loginButton"
         android:layout_below="@+id/editTextLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:background="@drawable/buttom_custom"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
 
     <TextView
         android:layout_width="wrap_content"
