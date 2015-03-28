@@ -98,4 +98,12 @@ public class SignUpActivity extends ActionBarActivity {
             }
         });
     }
+
+    //When the Cancel Button in the sign up activity is clicked.
+
+    @OnClick(R.id.cancelButton) void cancelSignUp(){
+        finish();
+    }
+
+
 }
