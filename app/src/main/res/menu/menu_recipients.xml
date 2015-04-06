@@ -8,6 +8,6 @@
           android:orderInCategory="100"
           app:showAsAction="always"
           android:visible="false"
-          android:icon="@mipmap/ic_action_send_now"
+          android:icon="@mipmap/ic_menu_send"
             />
 </menu>
