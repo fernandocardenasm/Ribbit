@@ -1,4 +1,4 @@
-package com.example.usuario.ribbit;
+package com.example.usuario.ribbit.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.usuario.ribbit.ParseConstants;
+import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.example.usuario.ribbit.R;
 import com.parse.ParseObject;
 

@@ -1,4 +1,4 @@
-package com.example.usuario.ribbit;
+package com.example.usuario.ribbit.adapters;
 
 /**
  * Created by usuario on 19/03/2015.
@@ -8,6 +8,10 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.usuario.ribbit.R;
+import com.example.usuario.ribbit.ui.FriendsFragment;
+import com.example.usuario.ribbit.ui.InboxFragment;
 
 import java.util.Locale;
 

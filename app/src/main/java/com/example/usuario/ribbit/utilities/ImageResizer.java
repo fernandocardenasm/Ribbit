@@ -1,4 +1,4 @@
-package com.example.usuario.ribbit.file_handlers;
+package com.example.usuario.ribbit.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

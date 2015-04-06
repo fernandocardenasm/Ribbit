@@ -1,4 +1,4 @@
-package com.example.usuario.ribbit;
+package com.example.usuario.ribbit.utilities;
 
 /**
  * Created by usuario on 19/03/2015.

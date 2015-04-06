@@ -1,4 +1,4 @@
-package com.example.usuario.ribbit;
+package com.example.usuario.ribbit.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.usuario.ribbit.utilities.ParseConstants;
+import com.example.usuario.ribbit.R;
+import com.example.usuario.ribbit.adapters.SectionsPagerAdapter;
 import com.parse.ParseUser;
 
 import java.io.File;

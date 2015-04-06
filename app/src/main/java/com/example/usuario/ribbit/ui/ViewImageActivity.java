@@ -1,10 +1,11 @@
-package com.example.usuario.ribbit;
+package com.example.usuario.ribbit.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageView;
 
+import com.example.usuario.ribbit.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.Timer;

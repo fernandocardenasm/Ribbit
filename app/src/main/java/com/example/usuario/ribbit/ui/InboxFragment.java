@@ -1,4 +1,4 @@
-package com.example.usuario.ribbit;
+package com.example.usuario.ribbit.ui;
 
 
 import android.content.Intent;
@@ -12,10 +12,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.usuario.ribbit.MessageAdapter;
-import com.example.usuario.ribbit.ParseConstants;
+import com.example.usuario.ribbit.adapters.MessageAdapter;
+import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.example.usuario.ribbit.R;
-import com.example.usuario.ribbit.ViewImageActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;

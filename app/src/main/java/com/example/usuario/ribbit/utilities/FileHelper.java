@@ -1,11 +1,9 @@
-package com.example.usuario.ribbit.file_handlers;
+package com.example.usuario.ribbit.utilities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
-
-import com.example.usuario.ribbit.ParseConstants;
 
 import org.apache.commons.io.IOUtils;
 
