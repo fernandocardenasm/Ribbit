@@ -30,7 +30,12 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_ribbit</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Ribbit</item>
         <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
+        <item name="actionOverflowButtonStyle">@style/Theme.Ribbit.Overflow</item>
 
+    </style>
+    
+    <style name="Theme.Ribbit.Overflow" parent="@android:style/Widget.ActionButton.Overflow">
+        <item name="android:src">@mipmap/ic_menu_overflow</item>
     </style>
 
     <style name="ActionBar.Solid.Ribbit" parent="@style/Widget.AppCompat.ActionBar.Solid">
