@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.usuario.ribbit.R;
 import com.example.usuario.ribbit.adapters.MessageAdapter;
 import com.example.usuario.ribbit.utilities.ParseConstants;
-import com.example.usuario.ribbit.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -31,6 +32,7 @@ import java.util.List;
 public class InboxFragment extends ListFragment {
 
     private List<ParseObject> mMessages;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     ProgressBar mInboxProgressBar;
     TextView mEmptyTextView;
@@ -39,6 +41,16 @@ public class InboxFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(mOnRefresherListener);
+        mSwipeRefreshLayout.setColorSchemeColors(
+                R.color.swipeRefresh1,
+                R.color.swipeRefresh2,
+                R.color.swipeRefresh3,
+                R.color.swipeRefresh4
+        );
+
         return rootView;
     }
 
@@ -66,6 +78,13 @@ public class InboxFragment extends ListFragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> messages, ParseException e) {
+
+
+                //Validating if the SwipeRefresher is being used
+
+                if (mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
 
                 mInboxProgressBar.setVisibility(View.INVISIBLE);
                 mEmptyTextView.setText(R.string.empty_inbox_label);
@@ -145,4 +164,11 @@ public class InboxFragment extends ListFragment {
 
         }
     }
+
+    protected SwipeRefreshLayout.OnRefreshListener mOnRefresherListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            LoadInboxMessages();
+        }
+    };
 }
