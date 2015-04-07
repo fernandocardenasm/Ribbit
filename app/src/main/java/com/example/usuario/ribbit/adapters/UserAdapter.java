@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.usuario.ribbit.R;
+import com.example.usuario.ribbit.utilities.MD5Util;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -33,7 +36,7 @@ public class UserAdapter extends ArrayAdapter<ParseUser> {
         if (convertView == null){
             convertView = LayoutInflater.from(mContext).inflate(R.layout.user_item, null);
             holder = new ViewHolder();
-            //holder.iconImageView = (ImageView) convertView.findViewById(R.id.messageIcon);
+            holder.userImageView = (ImageView) convertView.findViewById(R.id.userImageView);
             holder.nameLabel = (TextView) convertView.findViewById(R.id.nameLabel);
             convertView.setTag(holder);
         }
@@ -45,11 +48,31 @@ public class UserAdapter extends ArrayAdapter<ParseUser> {
 
         holder.nameLabel.setText(user.getUsername());
 
+        //Get the avatar image
+
+        String email = user.getEmail().toLowerCase();
+
+        if (email.equals("")){
+            holder.userImageView.setImageResource(R.mipmap.avatar_empty);
+        }
+        else{
+            String hash = MD5Util.md5Hex(email);
+            String gravatarUrl = "http://www.gravatar.com/avatar/" + hash +
+                    "?s=204&d=404";
+
+            //Picasso to fetch the image from the web
+
+            Picasso.with(mContext)
+                    .load(gravatarUrl)
+                    .placeholder(R.mipmap.avatar_empty)
+                    .into(holder.userImageView);
+        }
+
         return convertView;
     }
 
     private static class ViewHolder{
-        //ImageView iconImageView;
+        ImageView userImageView;
         TextView nameLabel;
     }
 

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.usuario.ribbit.R;
 import com.example.usuario.ribbit.adapters.UserAdapter;
-import com.example.usuario.ribbit.utilities.AlertDialogGenerator;
 import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -108,8 +107,11 @@ public class FriendsFragment extends Fragment {
                     }
 
                 } else {
-                    AlertDialogGenerator dialog = new AlertDialogGenerator();
-                    dialog.showAlertDialog(getActivity(), e.getMessage(), getString(R.string.error_title));
+
+                    //Revisar error
+                    /*AlertDialogGenerator dialog = new AlertDialogGenerator();
+                    dialog.showAlertDialog(getActivity(), e.getMessage(),getString(R.string.error_title));
+                    */
                 }
 
             }
