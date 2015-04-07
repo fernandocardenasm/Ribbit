@@ -4,11 +4,23 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/avatar_empty"
+        android:id="@+id/userImageView"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        />
+
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
+        android:maxLines="2"
+        android:padding="4dp"
         android:id="@+id/nameLabel"
-        android:layout_alignParentTop="true"
+        android:text="UserName"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_below="@+id/userImageView"
+        />
 </RelativeLayout>
