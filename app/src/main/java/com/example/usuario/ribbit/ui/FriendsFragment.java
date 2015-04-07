@@ -2,17 +2,18 @@ package com.example.usuario.ribbit.ui;
 
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.usuario.ribbit.R;
+import com.example.usuario.ribbit.adapters.UserAdapter;
 import com.example.usuario.ribbit.utilities.AlertDialogGenerator;
 import com.example.usuario.ribbit.utilities.ParseConstants;
-import com.example.usuario.ribbit.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Created by usuario on 19/03/2015.
  */
-public class FriendsFragment extends ListFragment {
+public class FriendsFragment extends Fragment {
 
     public static final String TAG = FriendsFragment.class.getSimpleName();
 
@@ -34,11 +35,19 @@ public class FriendsFragment extends ListFragment {
     private List<ParseUser> mFriends;
     private ParseRelation<ParseUser> mFriendsRelation;
     private ParseUser mCurrentUser;
+    private GridView mGridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+
+        mGridView = (GridView) rootView.findViewById(R.id.friendsGrid);
+
+        mLoadingFriendsProgressBar = (ProgressBar) rootView.findViewById(R.id.loadingFriendsProgressBar);
+        mEmptyTextView = (TextView) rootView.findViewById(android.R.id.empty);
+
+        mGridView.setEmptyView(mEmptyTextView);
 
         return rootView;
     }
@@ -51,8 +60,7 @@ public class FriendsFragment extends ListFragment {
     }
 
     private void loadListOfCurrentFriends() {
-        mLoadingFriendsProgressBar = (ProgressBar) getView().findViewById(R.id.loadingFriendsProgressBar);
-        mEmptyTextView = (TextView) getView().findViewById(android.R.id.empty);
+
 
         //Loading Progress Bar
         mLoadingFriendsProgressBar.setVisibility(View.VISIBLE);
@@ -91,15 +99,17 @@ public class FriendsFragment extends ListFragment {
                         usernames[i] = user.getUsername();
                         i++;
                     }
+                    if (mGridView.getAdapter() == null){
+                        UserAdapter adapter = new UserAdapter(getActivity(),mFriends);
+                        mGridView.setAdapter(adapter);
+                    }
+                    else{
+                        ((UserAdapter)mGridView.getAdapter()).refill(friends);
+                    }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            getListView().getContext(),
-                            android.R.layout.simple_list_item_1,
-                            usernames);
-                    setListAdapter(adapter);
                 } else {
                     AlertDialogGenerator dialog = new AlertDialogGenerator();
-                    dialog.showAlertDialog(getListView().getContext(), e.getMessage(), getString(R.string.error_title));
+                    dialog.showAlertDialog(getActivity(), e.getMessage(), getString(R.string.error_title));
                 }
 
             }
