@@ -8,16 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.usuario.ribbit.utilities.AlertDialogGenerator;
-import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.example.usuario.ribbit.R;
+import com.example.usuario.ribbit.adapters.UserAdapter;
+import com.example.usuario.ribbit.utilities.AlertDialogGenerator;
 import com.example.usuario.ribbit.utilities.FileHelper;
+import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -45,22 +45,24 @@ public class RecipientsActivity extends ActionBarActivity {
     private Uri mMediaUri;
     private String mFileType;
 
-    private ListView mListView;
+    private GridView mGridView;
 
-    @InjectView(R.id.friendsRetrieveProgressBar) ProgressBar mFriendsRetrieveProgressBar;
+    @InjectView(R.id.loadingFriendsProgressBar) ProgressBar mFriendsRetrieveProgressBar;
     @InjectView(android.R.id.empty) TextView mEmptyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipients);
+        setContentView(R.layout.user_grid);
         ButterKnife.inject(this);
 
-        mListView = (ListView) findViewById(R.id.friendsListView);
+        mGridView = (GridView) findViewById(R.id.friendsGrid);
 
-        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
 
         //getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        mGridView.setEmptyView(mEmptyTextView);
 
         mMediaUri = getIntent().getData();
         mFileType = getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
@@ -173,18 +175,20 @@ public class RecipientsActivity extends ActionBarActivity {
                         mEmptyTextView.setVisibility(View.INVISIBLE);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            mListView.getContext(),
-                            android.R.layout.simple_list_item_checked,
-                            usernames);
-                    mListView.setAdapter(adapter);
+                    if (mGridView.getAdapter() == null){
+                        UserAdapter adapter = new UserAdapter(RecipientsActivity.this ,mFriends);
+                        mGridView.setAdapter(adapter);
+                    }
+                    else{
+                        ((UserAdapter)mGridView.getAdapter()).refill(friends);
+                    }
 
 
 
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (mListView.getCheckedItemCount() > 0) {
+                            if (mGridView.getCheckedItemCount() > 0) {
                                 mSendMenuItem.setVisible(true);
                             } else {
                                 mSendMenuItem.setVisible(false);
@@ -235,8 +239,8 @@ public class RecipientsActivity extends ActionBarActivity {
     //Get the Friend´s Ids that were selected
     protected ArrayList<String> getRecipientIds(){
         ArrayList<String> recipientIds = new ArrayList<String>();
-        for (int i = 0; i < mListView.getCount(); i++){
-            if (mListView.isItemChecked(i)){
+        for (int i = 0; i < mGridView.getCount(); i++){
+            if (mGridView.isItemChecked(i)){
                 recipientIds.add(mFriends.get(i).getObjectId());
             }
         }
