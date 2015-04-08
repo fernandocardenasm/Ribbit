@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.example.usuario.ribbit.RibbitApplication;
 import com.example.usuario.ribbit.utilities.AlertDialogGenerator;
 import com.example.usuario.ribbit.R;
 import com.parse.LogInCallback;
@@ -89,6 +90,11 @@ public class LoginActivity extends ActionBarActivity {
                 mLoginProgressBar.setVisibility(View.INVISIBLE);
 
                 if (e == null){
+                    //Update Parse Installation}
+
+                    RibbitApplication.updateParseInstallation(ParseUser.getCurrentUser());
+
+
                     //Success
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

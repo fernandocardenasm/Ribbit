@@ -22,7 +22,9 @@ import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -248,6 +250,7 @@ public class RecipientsActivity extends ActionBarActivity {
             public void done(ParseException e) {
                 if (e == null){
                     Toast.makeText(RecipientsActivity.this, getString(R.string.success_message), Toast.LENGTH_SHORT).show();
+                    sendPushNotifications();
                 }
                 else {
                     AlertDialogGenerator dialog = new AlertDialogGenerator();
@@ -259,6 +262,20 @@ public class RecipientsActivity extends ActionBarActivity {
                 mSendMenuItem.setEnabled(true);
             }
         });
+    }
+
+    private void sendPushNotifications() {
+        ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+        query.whereContainedIn(ParseConstants.KEY_USER_ID,getRecipientIds());
+
+        //send the push notification
+
+        ParsePush push = new ParsePush();
+
+        push.setQuery(query);
+
+        push.setMessage(getString(R.string.push_message, ParseUser.getCurrentUser().getUsername()));
+        push.sendInBackground();
     }
 
     protected AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {

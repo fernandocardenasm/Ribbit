@@ -2,7 +2,10 @@ package com.example.usuario.ribbit;
 
 import android.app.Application;
 
+import com.example.usuario.ribbit.utilities.ParseConstants;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.ParseUser;
 
 /**
  * Created by usuario on 18/03/2015.
@@ -22,5 +25,11 @@ public class RibbitApplication extends Application {
         testObject.saveInBackground();
         */
 
+    }
+
+    public static void updateParseInstallation(ParseUser user){
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put(ParseConstants.KEY_USER_ID, user.getObjectId());
+        installation.saveInBackground();
     }
 }
