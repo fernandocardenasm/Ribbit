@@ -5,13 +5,15 @@
                 android:background="@android:color/white">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:src="@mipmap/avatar_empty"
         android:id="@+id/userImageView"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        />
+        style="@style/GridImage"/>
+
+    <ImageView
+        android:src="@mipmap/avatar_selected"
+        android:id="@+id/checkImageView"
+        style="@style/GridImage"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"
