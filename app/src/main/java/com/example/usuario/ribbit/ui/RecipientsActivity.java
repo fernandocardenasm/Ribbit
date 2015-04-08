@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -185,16 +186,7 @@ public class RecipientsActivity extends ActionBarActivity {
 
 
 
-                    mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (mGridView.getCheckedItemCount() > 0) {
-                                mSendMenuItem.setVisible(true);
-                            } else {
-                                mSendMenuItem.setVisible(false);
-                            }
-                        }
-                    });
+                    mGridView.setOnItemClickListener(mOnItemClickListener);
 
                 } else {
                     AlertDialogGenerator dialog = new AlertDialogGenerator();
@@ -268,4 +260,28 @@ public class RecipientsActivity extends ActionBarActivity {
             }
         });
     }
+
+    protected AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            ImageView checkImageView = (ImageView) view.findViewById(R.id.checkImageView);
+
+            if (mGridView.getCheckedItemCount() > 0) {
+                mSendMenuItem.setVisible(true);
+
+            } else {
+                mSendMenuItem.setVisible(false);
+            }
+
+            if (mGridView.isItemChecked(position)){
+                //Checked a friend
+                checkImageView.setVisibility(View.VISIBLE);
+            }
+            else{
+                //Unchecked a friend
+                checkImageView.setVisibility(View.INVISIBLE);
+            }
+        }
+    };
 }
